@@ -1,0 +1,29 @@
+plugins{
+    id 'java'
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+defaultTasks 'clean', 'run'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_16
+    targetCompatibility = JavaVersion.VERSION_1_16
+}
+
+dependencies {
+    implementation(fileTree("libs"))
+    implementation('com.google.code.findbugs:jsr305:3.0.2')
+}
+
+
+application {
+    mainClassName = "Start"
+}
+
+tasks.withType(JavaExec) {
+    systemProperty "java.library.path", "libs/${project.name}-natives"
+}
