@@ -10,13 +10,14 @@ repositories {
 defaultTasks 'clean', 'run'
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_16
-    targetCompatibility = JavaVersion.VERSION_1_16
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 dependencies {
     implementation(fileTree("libs"))
     implementation('com.google.code.findbugs:jsr305:3.0.2')
+    implementation('org.jetbrains:annotations:24.0.1')
 }
 
 
