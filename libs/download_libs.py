@@ -81,11 +81,15 @@ def process_rules(rules:list):
         if action=="allow":
             if 'os' in rule:
                 os=rule['os']
+                if 'name' in os:
+                    os=os['name']
                 if os!=PLATFORM:
                     keep_going=False
         elif action=="disallow":
             if 'os' in rule:
                 os=rule['os']
+                if 'name' in os:
+                    os=os['name']
                 if os==PLATFORM:
                     keep_going=False
     return keep_going
@@ -129,6 +133,7 @@ with open(f"{minecraft_version}.json") as file:
                 print(f"Natives not found in {natives} for platform {PLATFORM}")
                 sys.exit(-1)
             native=natives[PLATFORM]
+
         downloads=lib['downloads']
         if native is not None:
             if "classifiers" not in downloads:
@@ -142,5 +147,8 @@ with open(f"{minecraft_version}.json") as file:
             download_file(art["url"],art["sha1"],art["size"],NATIVE_PATH/Path(art["path"]).name,quiet)
         else:
             art=downloads["artifact"]
-            download_file(art["url"],art["sha1"],art["size"],art["path"],quiet)
+            if "natives" in art["path"]:
+                download_file(art["url"],art["sha1"],art["size"],NATIVE_PATH/Path(art["path"]).name,quiet)
+            else:
+                download_file(art["url"],art["sha1"],art["size"],art["path"],quiet)
             
